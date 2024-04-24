@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.Hexnodes</groupId>
   <artifactId>Hexnodes</artifactId>
-  <name>Hexnodes</name>
+  <name>HexnodesProject</name>
   <version>0.1.0-SNAPSHOT</version>
   <build>
     <plugins>
@@ -100,15 +100,14 @@
   <distributionManagement>
     <repository>
       <uniqueVersion>false</uniqueVersion>
-      <id>Hexnodes</id>
+      <id>Hexnodes-main</id>
       <name>Hexnodes Repo</name>
-      <url>https://github.com/mcknight99/Hexnodes/tree/main/Hexnodes/versions</url>
+      <url>https://github.com/mcknight99/Hexnodes/tree/main/Hexnodes/Hexnodes</url>
     </repository>
     <snapshotRepository>
-      <id>Hexnodes</id>
+      <id>Hexnodes-vc</id>
       <name>Hexnodes Snapshots</name>
       <url>https://github.com/mcknight99/Hexnodes/tree/main/Hexnodes/versions</url>
-      <layout>legacy</layout>
     </snapshotRepository>
   </distributionManagement>
   <properties>

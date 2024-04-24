@@ -7,23 +7,23 @@
     <groupId>org.Hexnodes</groupId>
     <artifactId>Hexnodes</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-    <name>Hexnodes</name>
+    <name>HexnodesProject</name>
     <packaging>jar</packaging>
 
     <distributionManagement>
         <repository>
             <uniqueVersion>false</uniqueVersion>
-            <id>Hexnodes</id>
+            <id>Hexnodes-main</id>
             <name>Hexnodes Repo</name>
-            <url>https://github.com/mcknight99/Hexnodes/tree/main/Hexnodes/versions</url>
+            <url>https://github.com/mcknight99/Hexnodes/tree/main/Hexnodes/Hexnodes</url>
             <layout>default</layout>
         </repository>
         <snapshotRepository>
             <uniqueVersion>true</uniqueVersion>
-            <id>Hexnodes</id>
+            <id>Hexnodes-vc</id>
             <name>Hexnodes Snapshots</name>
             <url>https://github.com/mcknight99/Hexnodes/tree/main/Hexnodes/versions</url>
-            <layout>legacy</layout>
+            <layout>default</layout>
         </snapshotRepository>
     </distributionManagement>
 
