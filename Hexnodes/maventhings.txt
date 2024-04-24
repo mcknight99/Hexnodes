@@ -1,0 +1,3 @@
+mvn release:prepare
+mvn deploy
+mvn clean

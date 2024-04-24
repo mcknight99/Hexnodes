@@ -33,7 +33,7 @@ public class Main extends Application {
         System.out.println(b.getNodeAtPosition(new Hexboard.Point(3,3)));
 
 
-        
+
         launch();
     }
 }
