@@ -4,6 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.hexnodes.hexnodes.game.AspectEnum;
+import org.hexnodes.hexnodes.game.Hexboard;
+import org.hexnodes.hexnodes.game.Node;
 
 import java.io.IOException;
 
@@ -17,9 +20,8 @@ public class Main extends Application {
         stage.show();
     }
 
-    /*
-
-    Hexboard b = new Hexboard();
+    public static void main(String[] args) {
+        Hexboard b = new Hexboard();
 
         System.out.println(b);
         b.setNodeAtPosition(new Hexboard.Point(3,3), new Node(AspectEnum.AER));
@@ -29,9 +31,9 @@ public class Main extends Application {
         b.setNodeAtPosition(new Hexboard.Point(3,3), new Node(AspectEnum.PERFODIO));
         System.out.println(b);
         System.out.println(b.getNodeAtPosition(new Hexboard.Point(3,3)));
-     */
 
-    public static void main(String[] args) {
+
+        
         launch();
     }
 }
