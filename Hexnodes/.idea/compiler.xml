@@ -6,6 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+      </profile>
+      <profile name="Annotation profile for HexnodesProject" enabled="true">
+        <sourceOutputDir name="../versions/generated-sources/annotations" />
+        <sourceTestOutputDir name="../versions/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
         <module name="Hexnodes" />
       </profile>
     </annotationProcessing>

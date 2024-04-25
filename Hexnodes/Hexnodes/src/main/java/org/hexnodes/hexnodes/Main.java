@@ -11,14 +11,6 @@ import org.hexnodes.hexnodes.game.Node;
 import java.io.IOException;
 
 public class Main extends Application {
-    @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 640, 480);
-        stage.setTitle("Hexnodes");
-        stage.setScene(scene);
-        stage.show();
-    }
 
     public static void main(String[] args) {
         Hexboard b = new Hexboard();
@@ -32,8 +24,14 @@ public class Main extends Application {
         System.out.println(b);
         System.out.println(b.getNodeAtPosition(new Hexboard.Point(3,3)));
 
-
-
         launch();
+    }
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 640, 480);
+        stage.setTitle("Hexnodes");
+        stage.setScene(scene);
+        stage.show();
     }
 }

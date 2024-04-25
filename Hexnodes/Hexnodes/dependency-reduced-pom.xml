@@ -2,10 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.Hexnodes</groupId>
-  <artifactId>Hexnodes</artifactId>
+  <artifactId>HexnodesArtifact</artifactId>
   <name>HexnodesProject</name>
   <version>0.1.0-SNAPSHOT</version>
   <build>
+    <directory>../versions</directory>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -13,6 +14,18 @@
         <configuration>
           <source>21</source>
           <target>21</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <index>true</index>
+            <manifest>
+              <mainClass>org.hexnodes.hexnodes/org.hexnodes.hexnodes.Main</mainClass>
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
       <plugin>
@@ -30,6 +43,12 @@
               <noManPages>true</noManPages>
               <stripDebug>true</stripDebug>
               <noHeaderFiles>true</noHeaderFiles>
+              <transformers>
+                <transformer />
+                <transformer>
+                  <mainClass>org.hexnodes.hexnodes/org.hexnodes.hexnodes.Main</mainClass>
+                </transformer>
+              </transformers>
             </configuration>
           </execution>
         </executions>
@@ -45,8 +64,9 @@
             </goals>
             <configuration>
               <transformers>
+                <transformer />
                 <transformer>
-                  <mainClass>org.hexnodes.hexnodes.Main</mainClass>
+                  <mainClass>org.hexnodes.hexnodes/org.hexnodes.hexnodes.Main</mainClass>
                 </transformer>
               </transformers>
               <minimizeJar>true</minimizeJar>
@@ -100,17 +120,18 @@
   <distributionManagement>
     <repository>
       <uniqueVersion>false</uniqueVersion>
-      <id>Hexnodes-main</id>
+      <id>Hexnodes</id>
       <name>Hexnodes Repo</name>
-      <url>https://github.com/mcknight99/Hexnodes/tree/main/Hexnodes/Hexnodes</url>
+      <url>https://github.com/mcknight99/Hexnodes</url>
     </repository>
     <snapshotRepository>
-      <id>Hexnodes-vc</id>
+      <id>Hexnodes</id>
       <name>Hexnodes Snapshots</name>
       <url>https://github.com/mcknight99/Hexnodes/tree/main/Hexnodes/versions</url>
     </snapshotRepository>
   </distributionManagement>
   <properties>
+    <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>5.10.0</junit.version>
   </properties>
