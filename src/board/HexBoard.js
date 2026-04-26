@@ -98,10 +98,12 @@ export default class HexBoard {
 
       if (!hex) return;
       this.hoverHex = hex;
-      this.redraw();
+      const tile = this.tiles.get(`${hex.q},${hex.r}`);
+      this.drawHover();
+
     });
 
-    // left click
+    // on click
     this.scene.input.on("pointerdown", (pointer) => {
       const hex = this.pixelToHex(pointer.x, pointer.y);
       if (!hex) return;
@@ -116,13 +118,29 @@ export default class HexBoard {
         tile.aspect = null;
         tile.sprite?.destroy();
         tile.sprite = null;
-        // this.drawHex(tile.x, tile.y, 0xff4444);
+        // this.drawHex(tile.x, tile.y, 0xff4444); // i still want to indicate in the future visually that an aspect was deleted
         this.drawConnections();
-        this.redraw();
         return;
       }
+    });
+  }
 
-      this.redraw();
+  drawHover() {
+    // when empty handed, color is a light gray
+    // when dragging an aspect:
+      // if nothing is there, color is light green
+      // if something is there, color is light red
+    this.graphics.clear();
+    this.tiles.forEach(tile => {
+      let color = 0x444444; // default 
+      if (this.hoverHex && tile.q === this.hoverHex.q && tile.r === this.hoverHex.r) {
+        if (this.scene.draggedAspect) {
+          color = tile.aspect ? 0xaa4444 : 0x448844;
+        } else {
+          color = 0x666666; // mouse hover no drag
+        }
+      }
+      this.drawHex(tile.x, tile.y, color);
     });
   }
 
@@ -161,22 +179,6 @@ export default class HexBoard {
 
     return { q: rx, r: rz };
   }
-
-  // Redraw board (handles hover + placed items)
-  redraw() {
-    // this.drawConnections(); // slow to redraw connections every call. move this to when aspects get placed and deleted once deletes are fixed
-    if (tile.aspect) {
-      const key = this.aspectManager.getTextureKey(tile.aspect);
-
-      if (!tile.sprite) {
-        // create once
-        tile.sprite = this.scene.add.image(tile.x, tile.y, key)
-          .setDisplaySize(36, 36);
-        tile.sprite.setTexture(key);
-        tile.sprite.setVisible(true);
-      } 
-  }
-}
 
   tryPlaceDragged(dragged) {
     if (!this.hoverHex) return;
@@ -267,6 +269,83 @@ export default class HexBoard {
     g.moveTo(x1, y1);
     g.lineTo(x2, y2);
     g.strokePath();
+  }
+
+  exportBoardState() {
+    const board = [];
+    const placed = [];
+
+    for (let tile of this.tiles.values()) {
+      board.push({ q: tile.q, r: tile.r });
+
+      if (tile.aspect) {
+        placed.push({
+          q: tile.q,
+          r: tile.r,
+          aspect: tile.aspect
+        });
+      }
+    }
+
+    return {
+      type: "custom",
+      board,
+      placed
+    };
+  }
+
+  loadBoardState(data) {
+    // Clear existing
+    this.clearBoard();
+
+    // Recreate tiles
+    this.tiles.clear();
+
+    data.board.forEach(({ q, r }) => {
+      const pos = this.hexToPixel(q, r);
+
+      this.tiles.set(`${q},${r}`, {
+        q,
+        r,
+        x: pos.x,
+        y: pos.y,
+        aspect: null,
+        sprite: null
+      });
+    });
+
+    // Place required/starting aspects
+    const placements = data.required || data.placed || [];
+
+    placements.forEach(({ q, r, aspect }) => {
+      const tile = this.tiles.get(`${q},${r}`);
+      if (!tile) return;
+
+      tile.aspect = aspect;
+
+      tile.sprite = this.scene.add.image(
+        tile.x,
+        tile.y,
+        this.aspectManager.getTextureKey(aspect)
+      )
+      .setDisplaySize(36, 36)
+      .setDepth(10);
+    });
+
+    // this.redraw();
+    this.drawConnections();
+  }
+
+  clearBoard() {
+    for (let tile of this.tiles.values()) {
+      if (tile.sprite) {
+        tile.sprite.destroy();
+        tile.sprite = null;
+      }
+      tile.aspect = null;
+    }
+
+    this.connectionGraphics.clear();
   }
 
 }

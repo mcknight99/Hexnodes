@@ -38,9 +38,6 @@ export default class RightPanel {
   createAspect(x, y, aspect) {
     const scene = this.scene;
 
-    // const icon = scene.add.image(x, y, this.aspectManager.getTextureKey(aspect))
-    //   .setDisplaySize(40, 40)
-    //   .setInteractive();
     const icon = scene.add.image(x, y,this.aspectManager.getTextureKey(aspect))
     .setDisplaySize(40, 40)
     .setInteractive()
@@ -62,15 +59,19 @@ export default class RightPanel {
         type: aspect,
         sprite: scene.add.image(x, y, this.aspectManager.getTextureKey(aspect))
           .setDisplaySize(40, 40)
+          .setDepth(100) // always on top 
       };
+
+      // if just a right click, show relations. clear when picked up
+      if (scene.input.activePointer.rightButtonDown()) {
+        scene.rightPanel.highlightRelations(aspect);
+      } 
     });
 
-    // Start drag
-    icon.on("pointerdown", () => {
-      scene.draggedAspect = {
-        type: label,
-        sprite: scene.add.rectangle(x, y, 40, 40, 0xaaaaaa)
-      };
+    scene.input.on("pointerdown", (pointer) => { 
+      if (!scene.input.activePointer.rightButtonDown()) {
+        scene.rightPanel.clearHighlights();
+      }
     });
 
     // Follow mouse
@@ -83,14 +84,6 @@ export default class RightPanel {
 
     // Drop
     scene.input.on("pointerup", () => {
-      // if (!scene.draggedAspect) return;
-
-      // scene.board.tryPlaceDragged(scene.draggedAspect);
-
-      // // remove dragging sprite
-      // scene.draggedAspect.sprite.destroy();
-      // scene.draggedAspect = null;
-
       if (!scene.draggedAspect) return;
 
       scene.board.tryPlaceDragged(scene.draggedAspect);
@@ -105,12 +98,12 @@ export default class RightPanel {
       scene.tooltip.setText(aspect);
       scene.tooltip.setVisible(true);
       scene.tooltip.setText(aspect.charAt(0).toUpperCase() + aspect.slice(1));
-      this.highlightRelations(aspect);
     });
 
     icon.on("pointerout", () => {
       scene.tooltip.setVisible(false);
-      this.clearHighlights();
+      
+      // this.clearHighlights();
     });
   }
 

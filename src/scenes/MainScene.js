@@ -40,6 +40,9 @@ export default class MainScene extends Phaser.Scene {
     });
 
 
+    // this.load.json("puzzle1", "assets/data/puzzles/puzzle1.json");
+    // const data = this.cache.json.get("puzzle1");
+    // this.board.loadBoardState(data);
 
   }
 
